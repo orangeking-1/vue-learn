@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<title>VUE学习</title>
+</head>
+<body>
+
+	<div id="app1">
+		<ul>
+			<li v-for='(value, key, index) in personObj'>
+				{{index}}.{{key}}: {{value}}
+			</li>
+		</ul>
+
+	</div>
+	
+</body>
+<script src='./node_modules/vue/dist/vue.js'></script>
+<script>
+	var app1 = new Vue({
+		el: '#app1',
+		data: {
+			personObj: {
+				fristName: 'wang',
+				lastName: 'guanghang',
+				age: '26'
+			}
+		}
+	})
+
+
+</script>
+</html>
