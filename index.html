@@ -15,6 +15,71 @@
 		</ul>
 
 	</div>
+
+	<div id="app">
+		{{message}}
+
+		<div>
+			<span v-bind:title="message">1111</span>
+		</div>
+		<div v-if = "seen">
+			show and hide 
+		</div>
+	</div>
+
+	<div id="app2">
+		<ol>
+			<vue-ol2
+				v-for="item in numberObj"
+				v-bind:todo="item"
+				v-bind:key="item.id">
+			</vue-ol2>
+		</ol>
+	</div>
+
+	<!-- vue的一些实例属性和方法 -->
+	<div id="app3">
+		<p>{{data3.a}}
+			<button v-on:click = "changeModelFunc">
+				改变数据
+			</button>
+		</p>
+		
+	</div>
+
+	<!-- vue绑定class类 -->
+	<style>
+		.active{
+			background:red;
+			color: blue;
+		}
+		.error{
+			color:red;
+		}
+	</style>
+	<div id="app4">
+		<div class="one" v-bind:class="{ active: isActive }">vue与ng-class相同绑定类</div>
+		<div v-bind:class="classObj" v-bind:style="{fontSize: fontSize + 'px' }">使用vue的计算属性返回一个对象绑定class</div>
+	</div>
+
+
+	<div id="app5">
+		<div v-if="show">show</div>
+		<div v-else>hide</div>
+
+
+		<div v-if="Math.random() > 0.5" style="background:red;">随机数大于0.5</div>
+		<div v-else style="background:green;">随机数小于0.5</div>
+	</div>
+
+
+	<div id="app6">
+	<!-- 当遍历的是一个对象的时候 （value，key, index) in obj -->
+		<div v-for='(item, index) in datas'>         
+			序列：{{index}}    id:{{item.id}}  名称： {{item.text}}
+		</div>
+	</div>
+
 	
 </body>
 <script src='./node_modules/vue/dist/vue.js'></script>
@@ -29,6 +94,97 @@
 			}
 		}
 	})
+
+
+
+var app6 = new Vue({
+		el: '#app6',
+		data: {
+			datas: [
+				{id:1, text:'白菜'},
+				{id:2, text:'萝卜'},
+				{id:3, text:'青蛇'},
+			]
+		}
+	})
+
+
+	var app5 = new Vue({
+		el:'#app5',
+		data: {
+			show: true
+		}
+	})
+
+	var app4 = new Vue({
+		el:'#app4',
+		data: {
+			isActive: true,
+			fontSize: 30,
+		},
+		computed: {
+			classObj: function(){
+				return {
+					'oneClass': this.isActive && true,
+					'error': true
+				}
+			}
+		}
+	})
+
+
+	var data3 = {
+		a: '原来数据'
+	} 
+	var app3 = new Vue({
+		el: '#app3',
+		data: {
+			data3
+		},
+		methods: {
+			changeModelFunc (){
+				data3.a = "我是改变了的数据"
+			}
+		},
+		watch: {
+			'data3.a' : function(){
+				console.log("shuj")
+			}
+		}
+
+	})
+	console.log(app3.data3.a === data3.a)
+	// app3.$watch('data3.a', (newValue, oldValue) => {
+	// 	//不要在选项属性或回调上使用箭头函数，应为箭头函数中this不是指向实例
+	// 	console.log(this.data3.a)
+	// 	console.log("数据改变了")
+	// })
+
+	var app = new Vue({
+		el: '#app',
+		data: {
+			message: 'hello world!',
+			seen : true
+		} 
+	})
+
+
+	Vue.component('vue-ol2', {
+		props: ['todo'],
+		template: '<li>{{todo.text}}</li>'
+	})
+	var app2 = new Vue({
+		el: '#app2',
+		data: {
+			numberObj: [
+				{id: 0, text: '123'},
+				{id: 1, text: '456'},
+				{id: 2, text: '789'}
+			]
+		}
+	})
+
+	
 
 
 </script>
